@@ -3,14 +3,15 @@ describe("your regexes", function(){
   // CHALLENGE: match an ip address
   it("should match ip addresses", function(){
 
-    var regex = /fixme/;
+    // var regex = /\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/;
+    var regex = /^(([1-2]\d?\d?\.)|(0\.)){3}[0-2]\d?\d?$/;
 
     var tests = [
       ["a.b.c.d", false],
       ["10.0.0.224", true],
       ["192.168.0.1", true],
       ["192.168.0", false],
-      // ["999.999.999.999", false] // uncomment if you're feeling self-destructive
+      ["999.999.999.999", false] // uncomment if you're feeling self-destructive
     ];
 
     tests.forEach(function(testData){
@@ -29,7 +30,7 @@ describe("your regexes", function(){
   // - can only contain letters, spaces, underscores and hyphens.
   it("should filter usernames", function(){
 
-    var regex = /fixme/;
+    var regex = /^[a-zA-Z]{1}[a-zA-Z _\-]{3,19}$/;
 
     var tests = [
       ["shawndrost", true],
@@ -64,8 +65,8 @@ describe("your regexes", function(){
   it("should extract text", function(){
 
     var extractText = function(str){
-      var matches = /fixme/.exec(str);
-      return /* something to do with matches?? */;
+      var matches = /(.*)<.+>(.*)<.+>(.*)/.exec(str);
+      return matches.slice(1,matches.length).join('') /* something to do with matches?? */;
     };
 
     var tests = [
@@ -82,7 +83,7 @@ describe("your regexes", function(){
   // CHALLENGE: match a decimal number.
   it("should match decimal numbers", function(){
 
-    var regex = /fixme/;
+    var regex = /^\-?\d*\.?\d+$/;
 
     var tests = [
       ["-0.0", true],
@@ -105,15 +106,16 @@ describe("your regexes", function(){
     })
   })
 
-  // CHALLENGE: given a string and a word, test if the word occurs two 
-  // times in quick succession (within 3 words) within the string.  You 
+  // CHALLENGE: given a string and a word, test if the word occurs two
+  // times in quick succession (within 3 words) within the string.  You
   // should use regexes, not because they're the best tool -- but because
   // you love pain.
   it("should detect nearby words", function(){
 
     var containsNearbyWords = function(haystack, needle){
-      // ???
-      return /* ?? */;
+      var regex = new RegExp('(^|\\b)' + needle + '(\\W[\\S]*){0,2}\\W' + needle + '(\\b|$)');
+      var matches = haystack.match(regex);
+      return matches ? true : false;
     };
 
     var tests = [
@@ -124,8 +126,8 @@ describe("your regexes", function(){
     ];
 
     tests.forEach(function(testData){
-      var haystack = testData[0], 
-        needle = testData[1], 
+      var haystack = testData[0],
+        needle = testData[1],
         expectedResult = testData[2]
         result = containsNearbyWords(haystack, needle);
       expect(result).toEqual(expectedResult);
