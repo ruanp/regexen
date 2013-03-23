@@ -4,14 +4,19 @@ describe("your regexes", function(){
   it("should match ip addresses", function(){
 
     // var regex = /\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/;
-    var regex = /^(([1-2]\d?\d?\.)|(0\.)){3}[0-2]\d?\d?$/;
+    var regex = /^(((2[0-5][0-5])|(1\d?\d?)|([1-9]\d?)|(0))){1}(\.((2[0-5][0-5])|(1\d?\d?)|([1-9]\d?)|(0\d?\d?))){3}$/;
 
     var tests = [
       ["a.b.c.d", false],
       ["10.0.0.224", true],
       ["192.168.0.1", true],
       ["192.168.0", false],
-      ["999.999.999.999", false] // uncomment if you're feeling self-destructive
+      ["999.999.999.999", false], // uncomment if you're feeling self-destructive
+      ["0.0.0.0", true],
+      ["0.1.0.1", true],
+      ["255.299.255.222", false],
+      ["012.12.12.12", false],
+      ["123.123.258.999", false]
     ];
 
     tests.forEach(function(testData){
